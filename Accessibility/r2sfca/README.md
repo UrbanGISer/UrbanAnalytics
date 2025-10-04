@@ -2,6 +2,8 @@
 
 A Python package for spatial accessibility analysis that reconciles 2SFCA and i2SFCA methods through distance decay parameterization and cross-entropy minimization.
 
+**Authors:** Lingbo Liu (Harvard University), Fahui Wang (Louisiana State University)
+
 ## Overview
 
 The R2SFCA package implements a unified framework for spatial accessibility analysis that:
@@ -114,13 +116,14 @@ R2SFCA(df, demand_col, supply_col, travel_cost_col, demand_id_col, supply_id_col
 
 #### Methods
 
-##### `dist_decay(distance, beta, **kwargs)`
+##### `dist_decay(beta, **kwargs)`
 Calculate distance decay values using the specified decay function.
 
 **Parameters:**
-- `distance`: Distance/travel cost values
 - `beta`: Primary decay parameter
 - `**kwargs`: Additional parameters (steepness for sigmoid, d0 for gaussian)
+
+**Note:** Uses the travel_cost data stored in the model during initialization.
 
 **Returns:** Decay values
 

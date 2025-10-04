@@ -15,8 +15,8 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 setup(
     name="r2sfca",
     version="1.0.0",
-    author="Urban Analytics Research Group",
-    author_email="research@urbananalytics.org",
+    author="Lingbo Liu, Fahui Wang",
+    author_email="lingbo.liu@harvard.edu, fahui.wang@lsu.edu",
     description="Reconciled Two-Step Floating Catchment Area Model for spatial accessibility analysis",
     long_description=long_description,
     long_description_content_type="text/markdown",

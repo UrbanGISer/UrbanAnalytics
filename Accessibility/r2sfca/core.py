@@ -103,6 +103,15 @@ class R2SFCA:
             else decay_function
         )
 
+        # Calculate median travel cost for sigmoid scaling
+        self.median_travel_cost = np.median(self.travel_cost)
+
+        # Print info for sigmoid function
+        if self.decay_function == DecayFunction.SIGMOID:
+            print(
+                f"Using median value of travel cost ({self.median_travel_cost:.2f}) for scaling beta in sigmoid function"
+            )
+
         # Default parameters for different decay functions
         self._default_params = {
             DecayFunction.EXPONENTIAL: {"beta": 1.0},
@@ -113,14 +122,12 @@ class R2SFCA:
             DecayFunction.LOG_SQUARED: {"beta": 1.0},
         }
 
-    def dist_decay(self, distance: np.ndarray, beta: float, **kwargs) -> np.ndarray:
+    def dist_decay(self, beta: float, **kwargs) -> np.ndarray:
         """
         Calculate distance decay values using the specified decay function.
 
         Parameters:
         -----------
-        distance : np.ndarray
-            Distance/travel cost values
         beta : float
             Primary decay parameter
         **kwargs
@@ -133,29 +140,41 @@ class R2SFCA:
         np.ndarray
             Decay values
         """
+        # Use the travel_cost stored in the model
+        distance = self.travel_cost
+
         # Get default parameters for this decay function
         default_params = self._default_params[self.decay_function].copy()
         default_params.update(kwargs)
+
+        # Allow epsilon to be overridden by kwargs
+        epsilon = kwargs.get("epsilon", self.epsilon)
 
         if self.decay_function == DecayFunction.EXPONENTIAL:
             return np.exp(-beta * distance)
 
         elif self.decay_function == DecayFunction.POWER:
-            return np.power(distance + self.epsilon, -beta)
+            return np.power(distance + epsilon, -beta)
 
         elif self.decay_function == DecayFunction.SIGMOID:
             steepness = default_params.get("steepness", 3.0)
-            return 1.0 / (1 + np.exp(steepness * (distance - beta)))
+            # Use beta * median_travel_cost as the scale parameter
+            scale_beta = beta * self.median_travel_cost
+            # Calculate argument with overflow protection
+            arg = steepness * (distance - scale_beta)
+            # Clip argument to prevent overflow/underflow
+            arg = np.clip(arg, -500, 500)
+            return 1.0 / (1 + np.exp(arg))
 
         elif self.decay_function == DecayFunction.SQRT_EXPONENTIAL:
-            return np.exp(-beta * np.sqrt(distance + self.epsilon))
+            return np.exp(-beta * np.sqrt(distance + epsilon))
 
         elif self.decay_function == DecayFunction.GAUSSIAN:
             d0 = default_params.get("d0", 20.0)
             return np.exp(-beta * np.power(distance / d0, 2))
 
         elif self.decay_function == DecayFunction.LOG_SQUARED:
-            return np.exp(-beta * np.power(np.log(distance + self.epsilon), 2))
+            return np.exp(-beta * np.power(np.log(distance + epsilon), 2))
 
         else:
             raise ValueError(f"Unknown decay function: {self.decay_function}")
@@ -177,7 +196,7 @@ class R2SFCA:
             Fij values
         """
         # Calculate supply-side decay coefficients
-        decay_values = self.dist_decay(self.travel_cost, beta, **kwargs)
+        decay_values = self.dist_decay(beta, **kwargs)
         sf_d = self.supply * decay_values
 
         # Get unique demand IDs
@@ -220,7 +239,7 @@ class R2SFCA:
             Tij values
         """
         # Calculate demand-side decay coefficients
-        decay_values = self.dist_decay(self.travel_cost, beta, **kwargs)
+        decay_values = self.dist_decay(beta, **kwargs)
         df_d = self.demand * decay_values
 
         # Get unique supply IDs
@@ -248,8 +267,8 @@ class R2SFCA:
 
     def search_fij(
         self,
-        beta_range: Tuple[float, float, float] = (0.0, 2.0, 0.1),
-        param2_range: Optional[Tuple[float, float, float]] = None,
+        beta_range: Union[float, Tuple[float, float, float]] = (0.0, 2.0, 0.1),
+        param2_range: Optional[Union[float, Tuple[float, float, float]]] = None,
         metrics: List[str] = ["cross_entropy", "correlation", "rmse"],
         normalize: bool = True,
     ) -> pd.DataFrame:
@@ -258,10 +277,13 @@ class R2SFCA:
 
         Parameters:
         -----------
-        beta_range : tuple
-            (start, end, step) for beta parameter
-        param2_range : tuple, optional
-            (start, end, step) for second parameter (steepness for sigmoid, d0 for gaussian)
+        beta_range : float or tuple
+            If float: fixed beta value
+            If tuple: (start, end, step) for beta parameter range
+        param2_range : float or tuple, optional
+            If float: fixed second parameter value
+            If tuple: (start, end, step) for second parameter range
+            If None: use default range based on decay function
         metrics : list
             List of evaluation metrics to calculate
         normalize : bool
@@ -272,11 +294,22 @@ class R2SFCA:
         pd.DataFrame
             Results of grid search with evaluation metrics
         """
-        beta_start, beta_end, beta_step = beta_range
-        beta_values = np.arange(beta_start, beta_end + beta_step, beta_step)
+        # Validate and process beta_range
+        if isinstance(beta_range, (int, float)):
+            # Fixed beta value
+            beta_values = np.array([beta_range])
+        elif isinstance(beta_range, (tuple, list)) and len(beta_range) == 3:
+            # Beta range (start, end, step)
+            beta_start, beta_end, beta_step = beta_range
+            beta_values = np.arange(beta_start, beta_end + beta_step, beta_step)
+        else:
+            raise ValueError(
+                "beta_range must be a single number or a tuple of (start, end, step)"
+            )
 
-        # Determine second parameter range if needed
+        # Validate and process param2_range
         if param2_range is None:
+            # Use default range based on decay function
             if self.decay_function == DecayFunction.SIGMOID:
                 param2_range = (1.0, 10.0, 0.5)  # steepness
             elif self.decay_function == DecayFunction.GAUSSIAN:
@@ -284,8 +317,25 @@ class R2SFCA:
             else:
                 param2_range = (1.0, 1.0, 1.0)  # dummy range
 
-        param2_start, param2_end, param2_step = param2_range
-        param2_values = np.arange(param2_start, param2_end + param2_step, param2_step)
+        if isinstance(param2_range, (int, float)):
+            # Fixed param2 value
+            param2_values = np.array([param2_range])
+        elif isinstance(param2_range, (tuple, list)) and len(param2_range) == 3:
+            # Param2 range (start, end, step)
+            param2_start, param2_end, param2_step = param2_range
+            param2_values = np.arange(
+                param2_start, param2_end + param2_step, param2_step
+            )
+        else:
+            raise ValueError(
+                "param2_range must be a single number or a tuple of (start, end, step)"
+            )
+
+        # Check if both parameters are fixed (no search needed)
+        if len(beta_values) == 1 and len(param2_values) == 1:
+            raise ValueError(
+                "Both beta_range and param2_range are fixed values. At least one parameter must have a range for grid search."
+            )
 
         results = []
 

@@ -33,7 +33,7 @@ from .core import R2SFCA, DecayFunction
 from .utils import evaluate_model, plot_grid_search_results
 
 __version__ = "1.0.0"
-__author__ = "Urban Analytics Research Group"
-__email__ = "research@urbananalytics.org"
+__author__ = "Lingbo Liu, Fahui Wang"
+__email__ = "lingbo.liu@harvard.edu, fahui.wang@lsu.edu"
 
 __all__ = ["R2SFCA", "DecayFunction", "evaluate_model", "plot_grid_search_results"]
