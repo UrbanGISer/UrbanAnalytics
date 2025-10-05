@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "r2sfca"
-version = "1.0.1"   
+version = "1.1.0"   
 description = "Reconciled Two-Step Floating Catchment Area Model for spatial accessibility analysis"
 readme = "README.md"
 license = {file = "LICENSE"}

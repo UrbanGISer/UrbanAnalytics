@@ -1,12 +1,12 @@
 # R2SFCA: Reconciled Two-Step Floating Catchment Area Model
 
-[![PyPI version](https://badge.fury.io/py/r2sfca.svg)](https://pypi.org/project/r2sfca/)
+[![PyPI version](https://badge.fury.io/py/r2sfca.svg)](https://pypi.org/project/r2sfca/1.1.0/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 
 A Python package for spatial accessibility analysis that reconciles 2SFCA and i2SFCA methods through distance decay parameterization and cross-entropy minimization.
 
-**Authors:** Lingbo Liu (Harvard University), Fahui Wang (Louisiana State University)
+**Authors:** Lingbo Liu (lingboliu@fas.harvard.edu), Fahui Wang (fwang@lsu.edu)
 
 ## 📖 Abstract
 
@@ -14,7 +14,7 @@ Understanding spatial accessibility and facility crowdedness is central to publi
 
 ## 🔗 Links
 
-- **PyPI Package**: [https://pypi.org/project/r2sfca/1.0.1/](https://pypi.org/project/r2sfca/1.0.1/)
+- **PyPI Package**: [https://pypi.org/project/r2sfca/1.1.0/](https://pypi.org/project/r2sfca/1.1.0/)
 - **Research Paper**: [Liu, L., & Wang, F. (2025). Reconciling 2SFCA and i2SFCA: A distance decay parameterization approach through cross-entropy minimization. International Journal of Geographical Information Science](https://doi.org/10.1080/13658816.2025.2562255)
 
 ## 🚀 Quick Start
@@ -352,7 +352,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For questions and support:
 - Open an issue on GitHub
-- Contact: lingbo.liu@harvard.edu, fahui.wang@lsu.edu
+- Contact: lingboliu@fas.harvard.edu, fwang@lsu.edu
 
 ---
 

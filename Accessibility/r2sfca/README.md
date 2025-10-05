@@ -2,7 +2,7 @@
 
 A Python package for spatial accessibility analysis that reconciles 2SFCA and i2SFCA methods through distance decay parameterization and cross-entropy minimization.
 
-**Authors:** Lingbo Liu (Harvard University), Fahui Wang (Louisiana State University)
+**Authors:** Lingbo Liu (lingboliu@fas.harvard.edu), Fahui Wang (fwang@lsu.edu)
 
 ## Overview
 
