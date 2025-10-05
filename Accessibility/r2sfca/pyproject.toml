@@ -1,20 +1,20 @@
 [build-system]
-requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+requires = ["setuptools>=69", "wheel", "build", "twine"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "r2sfca"
-version = "1.0.0"
+version = "1.0.1"   
 description = "Reconciled Two-Step Floating Catchment Area Model for spatial accessibility analysis"
 readme = "README.md"
 license = {file = "LICENSE"}
 authors = [
-    {name = "Lingbo Liu", email = "lingbo.liu@harvard.edu"},
-    {name = "Fahui Wang", email = "fahui.wang@lsu.edu"}
+    {name = "Lingbo Liu", email = "lingboliu@harvard.edu"},
+    {name = "Fahui Wang", email = "fwang@lsu.edu"}
 ]
 maintainers = [
-    {name = "Lingbo Liu", email = "lingbo.liu@harvard.edu"},
-    {name = "Fahui Wang", email = "fahui.wang@lsu.edu"}
+    {name = "Lingbo Liu", email = "lingboliu@harvard.edu"},
+    {name = "Fahui Wang", email = "fwang@lsu.edu"}
 ]
 keywords = ["spatial analysis", "accessibility", "2SFCA", "i2SFCA", "GIS", "urban analytics"]
 classifiers = [
@@ -59,9 +59,9 @@ Documentation = "https://r2sfca.readthedocs.io"
 Repository = "https://github.com/urbananalytics/r2sfca"
 Issues = "https://github.com/urbananalytics/r2sfca/issues"
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["r2sfca*"]
+[tool.setuptools]
+include-package-data = true
+packages = { find = { where = ["."], include = ["r2sfca*"] } }
 
 [tool.setuptools.package-data]
 r2sfca = ["*.md", "*.txt"]
