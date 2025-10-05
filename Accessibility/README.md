@@ -1,4 +1,4 @@
-# R2SFCA: Reconciled Two-Step Floating Catchment Area Model
+# r2SFCA: Reconciled Two-Step Floating Catchment Area Model
 
 [![PyPI version](https://badge.fury.io/py/r2sfca.svg)](https://pypi.org/project/r2sfca/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -16,7 +16,7 @@ Understanding spatial accessibility and facility crowdedness is central to publi
 
 ## 🔗 Links
 
-- **PyPI Package**: [https://pypi.org/project/r2sfca/1.1.0/](https://pypi.org/project/r2sfca/)
+- **PyPI Package**: [https://pypi.org/project/r2sfca/](https://pypi.org/project/r2sfca/)
 - **Research Paper**: [Liu, L., & Wang, F. (2025). Reconciling 2SFCA and i2SFCA: A distance decay parameterization approach through cross-entropy minimization. International Journal of Geographical Information Science](https://doi.org/10.1080/13658816.2025.2562255)
 
 ## 🚀 Quick Start
@@ -359,5 +359,6 @@ For questions and support:
 ---
 
 **Made with ❤️ by the Urban Analytics Research Group**
+
 
 
