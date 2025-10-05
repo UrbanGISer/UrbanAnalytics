@@ -8,6 +8,8 @@ A Python package for spatial accessibility analysis that reconciles 2SFCA and i2
 
 **Authors:** Lingbo Liu (lingboliu@fas.harvard.edu), Fahui Wang (fwang@lsu.edu)
 
+<img width="882" height="360" alt="image" src="https://github.com/user-attachments/assets/5b866b93-f18b-42e0-bf5d-57a8cb6725a0" />
+
 ## 📖 Abstract
 
 Understanding spatial accessibility and facility crowdedness is central to public service planning, yet existing methods often treat these two metrics separately. The Two-Step Floating Catchment Area (2SFCA) method measures accessibility from the demand side, while the inverted 2SFCA (i2SFCA) assesses crowdedness from the supply side. However, without proper integration, these two measures may diverge, raising concerns of their validity. This study introduces a distance decay parameterization framework to reconcile 2SFCA and i2SFCA by optimizing a unified distance decay function through cross-entropy minimization. We demonstrate that aligning demand-side and supply-side flows effectively enforces a behavioral equilibrium between accessibility and crowdedness.
@@ -357,3 +359,4 @@ For questions and support:
 ---
 
 **Made with ❤️ by the Urban Analytics Research Group**
+
