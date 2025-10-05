@@ -1,4 +1,4 @@
-# R2SFCA: Reconciled Two-Step Floating Catchment Area Model
+# r2SFCA: Reconciled Two-Step Floating Catchment Area Model
 
 A Python package for spatial accessibility analysis that reconciles 2SFCA and i2SFCA methods through distance decay parameterization and cross-entropy minimization.
 
@@ -6,7 +6,7 @@ A Python package for spatial accessibility analysis that reconciles 2SFCA and i2
 
 ## Overview
 
-The R2SFCA package implements a unified framework for spatial accessibility analysis that:
+The r2SFCA package implements a unified framework for spatial accessibility analysis that:
 
 - Reconciles demand-side (2SFCA) and supply-side (i2SFCA) accessibility measures
 - Optimizes distance decay parameters through cross-entropy minimization
@@ -48,12 +48,15 @@ crowdedness = model.crowd_score(beta=2.5)
 # Perform grid search to find optimal parameters
 results = model.search_fij(
     beta_range=(0.0, 5.0, 0.1),
+    # param2_range = (10, 20.0, 5.0),#optional for sigmoid and gaussian function
+    # either parameter can be a fixed value
     metrics=['cross_entropy', 'correlation', 'rmse']
 )
 
 # Optimize parameters using Adam optimizer
 optimization_result = model.solve_beta(
     metric='cross_entropy',
+    # param2=20.0, #optional for sigmoid and gaussian function
     method='adam',
     num_epochs=400
 )
@@ -396,11 +399,17 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 If you use this package in your research, please cite:
 
 ```
-@software{r2sfca2025,
-  title={R2SFCA: Reconciled Two-Step Floating Catchment Area Model},
-  author={Urban Analytics Research Group},
-  year={2025},
-  url={https://github.com/urbananalytics/r2sfca}
+@article{r2sfca2025,
+   author = {Liu, Lingbo and Wang, Fahui},
+   title = {Reconciling 2SFCA and i2SFCA via distance decay parameterization},
+   journal = {International Journal of Geographical Information Science},
+   pages = {1-18},
+   note = {doi: 10.1080/13658816.2025.2562255},
+   ISSN = {1365-8816},
+   DOI = {10.1080/13658816.2025.2562255},
+   url = {https://doi.org/10.1080/13658816.2025.2562255},
+   year = {2025},
+   type = {Journal Article}
 }
 ```
 

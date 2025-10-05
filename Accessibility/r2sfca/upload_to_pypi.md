@@ -20,9 +20,9 @@ r2sfca/
 ```
 
 ### 2. 检查版本号一致性
-- `__init__.py`: `__version__ = "1.0.0"`
-- `setup.py`: `version="1.0.0"`
-- `pyproject.toml`: `version = "1.0.0"`
+- `__init__.py`: `__version__ = "1.1.1"`
+- `setup.py`: `version="1.1.1"`
+- `pyproject.toml`: `version = "1.1.1"`
 
 ## 安装构建工具
 
@@ -48,8 +48,8 @@ python -m build
 ```
 
 这将创建：
-- `dist/r2sfca-1.0.0-py3-none-any.whl` (wheel 格式)
-- `dist/r2sfca-1.0.0.tar.gz` (源码分发包)
+- `dist/r2sfca-1.1.1-py3-none-any.whl` (wheel 格式)
+- `dist/r2sfca-1.1.1.tar.gz` (源码分发包)
 
 ## 检查包
 
@@ -60,7 +60,7 @@ twine check dist/*
 
 ### 2. 测试安装
 ```bash
-pip install dist/r2sfca-1.0.0-py3-none-any.whl
+pip install dist/r2sfca-1.1.1-py3-none-any.whl
 ```
 
 ### 3. 验证安装
@@ -150,7 +150,7 @@ print("模型创建成功！")
 ## 发布后维护
 
 ### 1. 创建 GitHub Release
-- 在 GitHub 仓库创建 v1.0.0 标签
+- 在 GitHub 仓库创建 v1.1.1 标签
 - 添加发布说明
 
 ### 2. 更新文档

@@ -14,7 +14,7 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 
 setup(
     name="r2sfca",
-    version="1.1.0",
+    version="1.1.1",
     author="Lingbo Liu, Fahui Wang",
     author_email="lingboliu@fas.harvard.edu, fwang@lsu.edu",
     description="Reconciled Two-Step Floating Catchment Area Model for spatial accessibility analysis",
