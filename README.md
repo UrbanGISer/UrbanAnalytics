@@ -4,9 +4,10 @@ Data and Tool for Urban Analytics
 Model: Reconciled 2SFCA (r2SFCA)
 
 ## R2SFCA: Reconciled Two-Step Floating Catchment Area Model
+ PyPI Package: https://pypi.org/project/r2sfca/1.1.0/
 Liu, L., & Wang, F. (2025). Reconciling 2SFCA and i2SFCA: A distance decay parameterization approach through cross-entropy minimization. International Journal of Geographical Information Science
 https://www.tandfonline.com/doi/full/10.1080/13658816.2025.2562255
-<img width="1764" height="720" alt="image" src="https://github.com/user-attachments/assets/5b866b93-f18b-42e0-bf5d-57a8cb6725a0" />
+<img width="882" height="360" alt="image" src="https://github.com/user-attachments/assets/5b866b93-f18b-42e0-bf5d-57a8cb6725a0" />
 
 
  
