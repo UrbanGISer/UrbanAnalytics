@@ -544,7 +544,14 @@ class R2SFCA:
                 tij = self.tij(beta[0])
 
             eval_metrics = self._calculate_metrics(fij, tij, [metric])
-            return eval_metrics[metric]
+
+            # For metrics that should be maximized, return negative value
+            if metric == "correlation" or metric.endswith("_correlation"):
+                return -eval_metrics[
+                    metric
+                ]  # Maximize correlation = minimize negative correlation
+            else:
+                return eval_metrics[metric]  # Minimize error metrics
 
         # Set up optimization bounds
         bounds = [(0.001, 10.0)]  # beta must be positive
@@ -623,7 +630,14 @@ class R2SFCA:
 
                 # Calculate loss
                 eval_metrics = self._calculate_metrics(fij, tij, [metric])
-                loss = eval_metrics[metric]
+
+                # For metrics that should be maximized, negate the value
+                if metric == "correlation" or metric.endswith("_correlation"):
+                    loss = -eval_metrics[
+                        metric
+                    ]  # Maximize correlation = minimize negative correlation
+                else:
+                    loss = eval_metrics[metric]  # Minimize error metrics
 
                 # Add regularization
                 regularization = 0.001 * (log_beta**2)
@@ -650,7 +664,12 @@ class R2SFCA:
                 eval_metrics_plus = self._calculate_metrics(
                     fij_plus, tij_plus, [metric]
                 )
-                loss_plus = eval_metrics_plus[metric] + 0.001 * (log_beta_plus**2)
+
+                # Apply same logic for maximization metrics
+                if metric == "correlation" or metric.endswith("_correlation"):
+                    loss_plus = -eval_metrics_plus[metric] + 0.001 * (log_beta_plus**2)
+                else:
+                    loss_plus = eval_metrics_plus[metric] + 0.001 * (log_beta_plus**2)
 
                 grad_log_beta = (loss_plus - total_loss) / h
 

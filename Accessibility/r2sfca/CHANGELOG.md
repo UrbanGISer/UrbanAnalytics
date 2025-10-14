@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] - 2025-10-14
+
+### Fixed
+- Fixed package structure by removing erroneous root-level `__init__.py` file
+- Resolved import conflicts that prevented proper module loading
+- Fixed missing `__version__` attribute in installed package
+
+### Technical Details
+- Removed duplicate `__init__.py` in project root directory
+- Ensured correct package structure with only `r2sfca/r2sfca/__init__.py`
+- Package now correctly exposes version information after installation
+
+## [1.1.2] - 2025-10-14
+
+### Fixed
+- Fixed `solve_beta` method to correctly maximize correlation metric instead of minimizing it
+- Correlation optimization now properly uses negative values internally while returning positive correlation in results
+- Both `minimize` (scipy) and `adam` optimization methods are corrected
+- All correlation-based metrics (`correlation`, `fij_flow_correlation`, `tij_flow_correlation`) now properly maximized
+
+### Technical Details
+- Modified `_solve_beta_minimize` objective function to negate correlation metrics
+- Modified `_solve_beta_adam` loss calculation to negate correlation metrics
+- Ensures cross-entropy, RMSE, MSE, MAE continue to be minimized correctly
+
 ## [1.1.1] - 2025-01-04
 
 ### Changed

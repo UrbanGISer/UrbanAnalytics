@@ -38,7 +38,7 @@ model = R2SFCA(
     demand_id_col='DemandID',
     supply_id_col='SupplyID',
     observed_flow_col='O_Fij',  # Optional, for validation
-    decay_function='gaussian'
+    decay_function='exponential'
 )
 
 # Calculate accessibility and crowdedness scores
